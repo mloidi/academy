@@ -1,5 +1,5 @@
-import React from '../../../node_modules/react';
-import styled from '../../../node_modules/styled-components/dist/styled-components.cjs';
+import React from 'react';
+import styled from 'styled-components';
 
 const InputText = styled.input`
   display: ${props => (props.show ? 'block' : 'none')};
@@ -50,7 +50,7 @@ const InputCheckBox = styled.div`
       top: -0.1rem;
       width: 0.3rem;
       height: 0.8rem;
-      border: solid ${props => props.theme.principal};
+      border: solid ${props => props.theme.text};
       border-width: 0 0.2rem 0.2rem 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
@@ -73,7 +73,7 @@ const InputCheckBox = styled.div`
       top: 0.4rem;
       width: 1rem;
       height: 0.8rem;
-      border: solid ${props => props.theme.principal};
+      border: solid ${props => props.theme.text};
       border-width: 0.2rem 0 0 0;
     }
   }

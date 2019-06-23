@@ -1,5 +1,5 @@
-import React, { useContext } from '../../../node_modules/react';
-import { NavLink as Link } from '../../../node_modules/react-router-dom';
+import React, { useContext } from 'react';
+import { NavLink as Link } from 'react-router-dom';
 
 import {
   Area,

@@ -1,6 +1,6 @@
-import React, { Component } from '../node_modules/react';
-import { BrowserRouter as Router, Route, Switch } from '../node_modules/react-router-dom';
-import { ThemeProvider } from '../node_modules/styled-components/dist/styled-components.cjs';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
 import { ContextProvider } from './globalState/state';
 import { AuthContext, AlertContext, AuxDataContext } from './globalState';
@@ -14,7 +14,7 @@ import Incomings from './components/incomings/Incomings';
 import Admin from './components/admin/Admin';
 
 const theme = {
-  principal: '#aa0d0f',
+  principal: '#d2a679',//'#ccffff',
   secondary: 'white',
   text: '#999',
   textEditor: 'black',

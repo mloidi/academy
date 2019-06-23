@@ -1,8 +1,7 @@
-import React from '../../../node_modules/react';
-import { Helmet } from '../../../node_modules/react-helmet/lib/Helmet';
+import React from 'react';
+import { Helmet } from 'react-helmet';
 
-import { Area, Title, ActionRow } from './Style';
-import { Button } from '../../css/GlobalStyle';
+import { Area, Title, Button, Buttons } from '../../css/GlobalStyle';
 import Icon from '../element/Icon';
 
 const Incomings = () => {
@@ -12,11 +11,11 @@ const Incomings = () => {
         <title>Incomings students</title>
       </Helmet>
       <Title>Incomings students</Title>
-      <ActionRow>
+      <Buttons>
         <Button show={true}>
           <Icon icon="faPlus" /> {' add incoming student'}
         </Button>
-      </ActionRow>
+      </Buttons>
     </Area>
   );
 };

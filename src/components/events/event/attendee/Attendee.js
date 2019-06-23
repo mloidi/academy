@@ -1,4 +1,4 @@
-import React, { useState } from '../../../../../node_modules/react';
+import React, { useState } from 'react';
 
 import { Area, HeaderRow, InputRow, Button } from './Style';
 import Input from '../../../element/Input';

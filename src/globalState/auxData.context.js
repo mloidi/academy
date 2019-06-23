@@ -1,4 +1,4 @@
-import React, { createContext, useState } from '../../node_modules/react';
+import React, { createContext, useState } from 'react';
 
 import { AcademicYearService } from '../service/adminData.service';
 
@@ -26,9 +26,14 @@ export const AuxDataProvider = ({ children }) => {
 
   const [adminMenu, setAdminMenu] = useState(() => {
     return [
-      { index: 1, value: 'Academic years', selected: true },
-      { index: 2, value: 'Campus', selected: false },
-      { index: 3, value: 'Schools', selected: false }
+      {
+        index: 1,
+        icon: 'faUniversity',
+        value: 'Academic years',
+        selected: true
+      },
+      { index: 2, icon: 'faUniversity', value: 'Campus', selected: false },
+      { index: 3, icon: 'faUniversity', value: 'Schools', selected: false }
     ];
   });
 

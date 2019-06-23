@@ -1,6 +1,6 @@
-import React from '../../../../../node_modules/react';
-import { RichUtils, KeyBindingUtil, EditorState } from '../../../../../node_modules/draft-js/lib/Draft';
-import styled from '../../../../../node_modules/styled-components/dist/styled-components.cjs';
+import React from 'react';
+import { RichUtils, KeyBindingUtil, EditorState } from 'draft-js';
+import styled from 'styled-components';
 
 const Anchor = styled.a`
   cursor: pointer;

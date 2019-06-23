@@ -1,5 +1,5 @@
-import React from '../../../node_modules/react';
-import { FontAwesomeIcon } from '../../../node_modules/@fortawesome/react-fontawesome';
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,
   faEnvelope,
@@ -47,8 +47,10 @@ import {
   faAngleDoubleRight,
   faAngleRight,
   faUserGraduate,
-  faCogs
-} from '../../../node_modules/@fortawesome/free-solid-svg-icons';
+  faCogs,
+  faUndoAlt,
+  faUniversity
+} from '@fortawesome/free-solid-svg-icons';
 import {
   faGithub,
   faLinkedin,
@@ -61,7 +63,7 @@ import {
   faReact,
   faBootstrap,
   faNode
-} from '../../../node_modules/@fortawesome/free-brands-svg-icons';
+} from '@fortawesome/free-brands-svg-icons';
 
 const Icon = props => (
   <React.Fragment>
@@ -179,6 +181,10 @@ const Icon = props => (
       <FontAwesomeIcon icon={faUserGraduate} />
     ) : props.icon === 'faCogs' ? (
       <FontAwesomeIcon icon={faCogs} />
+    ) : props.icon === 'faUndoAlt' ? (
+      <FontAwesomeIcon icon={faUndoAlt} />
+    ) : props.icon === 'faUniversity' ? (
+      <FontAwesomeIcon icon={faUniversity} />
     ) : props.icon === 'faCoffee' ? (
       <FontAwesomeIcon icon={faCoffee} />
     ) : (

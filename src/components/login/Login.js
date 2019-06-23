@@ -1,5 +1,5 @@
-import React, { useContext, useState } from '../../../node_modules/react';
-import { Helmet } from '../../../node_modules/react-helmet/lib/Helmet';
+import React, { useContext, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import { Area, Title, NoError, Error, ButtonRow } from './Style';
 import { Button } from '../../css/GlobalStyle';

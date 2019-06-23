@@ -1,5 +1,5 @@
-import React, { useContext, useState } from '../../../../node_modules/react';
-import moment from '../../../../node_modules/moment/moment';
+import React, { useContext, useState } from 'react';
+import moment from 'moment';
 
 import {
   Area,

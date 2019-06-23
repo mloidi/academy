@@ -1,4 +1,4 @@
-import React, { useContext, useState } from '../../../node_modules/react';
+import React, { useContext, useState } from 'react';
 
 import { Area, MessageRow, IconStyle, ButtonRow, Text, Button } from './Style';
 import { ALERT_TYPE } from '../../lib/constants';

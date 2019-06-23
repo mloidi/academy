@@ -1,7 +1,13 @@
-import React, { useContext, useState } from '../../../node_modules/react';
-import { Helmet } from '../../../node_modules/react-helmet/lib/Helmet';
+import React, { useContext, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
-import { Area, Title, Layout, AdminMenu, AdminMenuOption } from './Style';
+import {
+  Area,
+  Title,
+  AdminLayout,
+  AdminMenu,
+  AdminMenuOption
+} from '../../css/GlobalStyle';
 import { AuxDataContext } from '../../globalState';
 import Icon from '../element/Icon';
 import AcademicYears from './academicYears/AcademicYears';
@@ -23,7 +29,7 @@ const Admin = () => {
       <Title>
         <Icon icon="faCogs" /> Admin
       </Title>
-      <Layout>
+      <AdminLayout>
         <AdminMenu>
           {adminMenu.map(item => (
             <AdminMenuOption
@@ -58,7 +64,7 @@ const Admin = () => {
             <div />
           )}
         </div>
-      </Layout>
+      </AdminLayout>
     </Area>
   );
 };

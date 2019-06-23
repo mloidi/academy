@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from '../../../node_modules/react';
-import { Helmet } from '../../../node_modules/react-helmet/lib/Helmet';
-import moment from '../../../node_modules/moment/moment';
+import React, { useContext, useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import moment from 'moment';
 
-import { Area, Title, Table, Header, Row } from './Style';
-import { Button } from '../../css/GlobalStyle';
+import { Title, Table, Header, Row } from './Style';
+import { Area, Button } from '../../css/GlobalStyle';
 import { AuthContext, AuxDataContext } from '../../globalState';
 import { EventService } from '../../service/event.service';
 import Icon from '../element/Icon';

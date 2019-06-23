@@ -1,4 +1,4 @@
-import styled from '../../../node_modules/styled-components/dist/styled-components.cjs';
+import styled from 'styled-components';
 
 export const Area = styled.div`
   background-color: ${props => props.theme.principal};

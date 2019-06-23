@@ -1,4 +1,4 @@
-import React from '../../../../node_modules/react';
+import React from 'react';
 
 const Schools = () => {
   return <div>Schools set up</div>;

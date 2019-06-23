@@ -1,39 +1,59 @@
-import React, { useContext, useState, useEffect } from '../../../../node_modules/react';
+import React, { useContext, useState, useEffect } from 'react';
 
 import {
-  Header,
-  Row,
-  RowText,
-  RowActions,
-  NewAcademicYear,
-  NewAcademicYearInput
-  // ErrorLabel
-} from './Style';
-import { Button } from '../../../css/GlobalStyle';
+  Button,
+  AcademicYearBoxes,
+  AcademicYearBox
+} from '../../../css/GlobalStyle';
 import {
   AuthContext,
   AlertContext,
   AuxDataContext
 } from '../../../globalState';
 import { AcademicYearService } from '../../../service/adminData.service';
-import Input from '../../element/Input';
 import Icon from '../../element/Icon';
+import Details from './details/Details';
 
 const AcademicYears = () => {
   const { token } = useContext(AuthContext);
   const { sendSuccess } = useContext(AlertContext);
-  const { academicYear, updateAcademicYear, setAcademicYear } = useContext(
-    AuxDataContext
-  );
-  const [tableHeader] = useState(() => {
-    return ['academic year', 'current', ''];
-  });
-  const [showNewAcademicYear, setShowNewAcademicYear] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [firstYear, setFirstYear] = useState('');
-  // const [isOkFirstYear, setIsOkFirstYear] = useState(true);
-  const [secondYear, setSecondYear] = useState('');
-  // const [isOkSecondYear, setIsOkSecondYear] = useState(true);
+  const {
+    academicYear,
+    // , updateAcademicYear
+    setAcademicYear
+  } = useContext(AuxDataContext);
+
+  const [showDetails, setShowDetails] = useState(false);
+  const [selectedAcademicYear, setSelectedAcademicYear] = useState();
+
+  const [academicYears, setAcademicYears] = useState([]);
+  const [hasMoreRightItems, setHasMoreRightItems] = useState(false);
+  const [hasMoreLeftItems, setHasMoreLeftItems] = useState(false);
+
+  useEffect(() => {
+    if (academicYear) {
+      const threeAcademicYears = [];
+      let isActive = false;
+      for (let index = 0; index < academicYear.length; index++) {
+        const element = academicYear[index];
+        if (isActive) {
+          threeAcademicYears.push(element);
+        }
+        if (element.active) {
+          if (index > 0) {
+            threeAcademicYears.push(academicYear[index - 1]);
+          }
+          threeAcademicYears.push(element);
+        }
+        isActive = element.active;
+      }
+      if (academicYear.length > 3) {
+        setHasMoreRightItems(true);
+      }
+      setHasMoreLeftItems(false);
+      setAcademicYears(threeAcademicYears);
+    }
+  }, [academicYear]);
 
   useEffect(() => {
     AcademicYearService.get(token).then(response => {
@@ -41,183 +61,105 @@ const AcademicYears = () => {
     });
   }, [setAcademicYear, token]);
 
-  const handleInputChange = event => {
-    const target = event.target;
-    const name = target.name;
-    const academicYearCopy = [...academicYear];
-    updateAcademicYear(
-      academicYearCopy.map(itemAcademicYearCopy => {
-        if (itemAcademicYearCopy.description === name) {
-          itemAcademicYearCopy.active = true;
-        } else {
-          itemAcademicYearCopy.active = false;
-        }
-        return itemAcademicYearCopy;
-      })
-    );
-  };
+  // const handleInputChange = event => {
+  //   const target = event.target;
+  //   const name = target.name;
+  //   const academicYearCopy = [...academicYear];
+  //   updateAcademicYear(
+  //     academicYearCopy.map(itemAcademicYearCopy => {
+  //       if (itemAcademicYearCopy.description === name) {
+  //         itemAcademicYearCopy.active = true;
+  //       } else {
+  //         itemAcademicYearCopy.active = false;
+  //       }
+  //       return itemAcademicYearCopy;
+  //     })
+  //   );
+  // };
 
-  const showActionsButton = (_id, showActions) => {
-    const academicYearCopy = [...academicYear];
-    setAcademicYear(
-      academicYearCopy.map(itemAcademicYearCopy => {
-        if (itemAcademicYearCopy._id === _id) {
-          itemAcademicYearCopy.showActions = showActions;
-        }
-        return itemAcademicYearCopy;
-      })
-    );
+  const goBackFromDetails = () => {
+    setShowDetails(false);
+    setSelectedAcademicYear();
   };
 
   return (
     <React.Fragment>
-      <Header>
-        {tableHeader.map(tableHeader => (
-          <div key={tableHeader}>{tableHeader}</div>
-        ))}
-      </Header>
-      {academicYear &&
-        academicYear.map(item => (
-          <Row
-            isAdded={item.isAdded}
-            isEdited={item.isEdited}
-            isDeleted={item.isDeleted}
-            key={item._id}
-            onMouseEnter={() => {
-              showActionsButton(item._id, true);
-            }}
-            onMouseLeave={() => {
-              showActionsButton(item._id, false);
-            }}
-          >
-            <RowText>{item.description}</RowText>
-            <RowText>
-              <Input
-                type="checkbox"
-                id={item.description}
-                name={item.description}
-                checked={item.active}
-                onChange={handleInputChange}
-              />
-            </RowText>
-            {item.showActions && !isEditing ? (
-              <RowActions>
-                <Button
-                  show={true}
-                  onClick={() => {
-                    const academicYearCopy = [...academicYear];
-                    setAcademicYear(
-                      academicYearCopy.map(itemAcademicYearCopy => {
-                        if (itemAcademicYearCopy._id === item._id) {
-                          itemAcademicYearCopy.isEdited = true;
-                        }
-                        return itemAcademicYearCopy;
-                      })
-                    );
-                  }}
-                >
-                  <Icon icon="faEdit" /> Edit
-                </Button>
-                <Button
-                  show={true}
-                  onClick={() => {
-                    const academicYearCopy = [...academicYear];
-                    setAcademicYear(
-                      academicYearCopy.map(itemAcademicYearCopy => {
-                        if (itemAcademicYearCopy._id === item._id) {
-                          itemAcademicYearCopy.isDeleted = true;
-                        }
-                        return itemAcademicYearCopy;
-                      })
-                    );
-                  }}
-                >
-                  <Icon icon="faTrash" /> Delete
-                </Button>
-              </RowActions>
-            ) : (
-              <div />
-            )}
-          </Row>
-        ))}
-      {showNewAcademicYear ? (
-        <Row>
-          <NewAcademicYear>
-            <NewAcademicYearInput>
-              <RowText>
-                <label>{firstYear}</label>
-                <label>{' - '}</label>
-                <label>{secondYear}</label>
-              </RowText>
-              {/* <Input
-                type="text"
-                id="firstYear"
-                name="firstYear"
-                show={true}
-                isValid={isOkFirstYear}
-                value={firstYear}
-                onChange={event => {
-                  const target = event.target;
-                  const value = target.value;
-                  if (value !== '') {
-                    setIsOkFirstYear(true);
-                  }
-                  if (value.match(/^[0-9]{0,4}$/)) {
-                    setFirstYear(value);
-                  }
-                }}
-              />
-              <Input
-                type="text"
-                id="secondYear"
-                name="secondYear"
-                show={true}
-                isValid={isOkSecondYear}
-                value={secondYear}
-                onChange={event => {
-                  const target = event.target;
-                  const value = target.value;
-                  if (value !== '') {
-                    setIsOkSecondYear(true);
-                  }
-                  if (value.match(/^[0-9]{0,4}$/)) {
-                    setSecondYear(value);
-                  }
-                }}
-              /> */}
-            </NewAcademicYearInput>
-            {/* {isOkFirstYear && isOkSecondYear ? (
-              ''
-            ) : (
-              <ErrorLabel>
-                Please insert a new <strong>Academic year</strong>
-              </ErrorLabel>
-            )} */}
-          </NewAcademicYear>
-          <div />
-          <RowActions>
+      <React.Fragment>
+        <AcademicYearBoxes>
+          {hasMoreLeftItems ? (
             <Button
               show={true}
               onClick={() => {
-                // if (firstYear === '' && secondYear === '') {
-                //   setIsOkFirstYear(false);
-                //   setIsOkSecondYear(false);
-                // } else {
-                //   AcademicYearService.save(
-                //     token,
-                //     {
-                //       firstYear,
-                //       secondYear
-                //     },
-                //     true
-                //   ).then(response => {
-                //     sendSuccess(
-                //       'New academic year ' + response.description + ' added'
-                //     );
-                //     setShowNewAcademicYear(!showNewAcademicYear);
-                //     setIsEditing(false);
-                //   });
-                // }
+                const index = academicYear.findIndex(item => {
+                  return item._id === academicYears[0]._id;
+                });
+                const newArray = [];
+                if (academicYear[index - 1]) {
+                  newArray.push(academicYear[index - 1]);
+                }
+                newArray.push(academicYear[index]);
+                newArray.push(academicYear[index + 1]);
+                if (academicYear[0]._id === newArray[0]._id) {
+                  setHasMoreLeftItems(false);
+                }
+                setHasMoreRightItems(true);
+                setAcademicYears(newArray);
+              }}
+            >
+              <Icon icon="faArrowLeft" />
+            </Button>
+          ) : (
+            <div />
+          )}
+          {academicYears &&
+            academicYears.map(item => (
+              <AcademicYearBox
+                key={item._id}
+                className={item.active ? 'active' : ''}
+                onClick={() => {
+                  setShowDetails(!showDetails);
+                  if (selectedAcademicYear) {
+                    setSelectedAcademicYear();
+                  } else {
+                    setSelectedAcademicYear(item);
+                  }
+                }}
+              >
+                <div>{item.description}</div>
+              </AcademicYearBox>
+            ))}
+          {hasMoreRightItems ? (
+            <Button
+              show={true}
+              onClick={() => {
+                const index = academicYear.findIndex(item => {
+                  return item._id === academicYears[2]._id;
+                });
+                const newArray = [];
+                newArray.push(academicYear[index - 1]);
+                newArray.push(academicYear[index]);
+                if (academicYear[index + 1]) {
+                  newArray.push(academicYear[index + 1]);
+                }
+                if (
+                  academicYear[academicYear.length - 1]._id ===
+                  newArray[newArray.length - 1]._id
+                ) {
+                  setHasMoreRightItems(false);
+                }
+                setHasMoreLeftItems(true);
+                setAcademicYears(newArray);
+              }}
+            >
+              <Icon icon="faArrowRight" />
+            </Button>
+          ) : (
+            <Button
+              show={true}
+              onClick={() => {
+                const lastAcademicYear = academicYear[academicYear.length - 1];
+                const firstYear = lastAcademicYear.secondYear + 1;
+                const secondYear = lastAcademicYear.secondYear + 2;
                 const academicYearCopy = [...academicYear];
                 const newAcademicYear = {
                   _id: firstYear + ' - ' + secondYear,
@@ -234,40 +176,20 @@ const AcademicYears = () => {
                 sendSuccess(
                   'New academic year ' + newAcademicYear.description + ' added'
                 );
-                setShowNewAcademicYear(!showNewAcademicYear);
-                setIsEditing(false);
               }}
             >
-              <Icon icon="faSave" /> Save
+              <Icon icon="faPlus" />
             </Button>
-            <Button
-              show={true}
-              onClick={() => {
-                // setIsOkFirstYear(true);
-                // setIsOkSecondYear(true);
-                setFirstYear('');
-                setSecondYear('');
-                setShowNewAcademicYear(!showNewAcademicYear);
-                setIsEditing(false);
-              }}
-            >
-              <Icon icon="faTimes" /> Cancel
-            </Button>
-          </RowActions>
-        </Row>
+          )}
+        </AcademicYearBoxes>
+      </React.Fragment>
+      {showDetails ? (
+        <Details
+          academicYear={selectedAcademicYear}
+          goBackFromDetails={goBackFromDetails}
+        />
       ) : (
-        <Button
-          show={true}
-          onClick={() => {
-            const lastAcademicYear = academicYear[academicYear.length - 1];
-            setFirstYear(lastAcademicYear.secondYear + 1);
-            setSecondYear(lastAcademicYear.secondYear + 2);
-            setShowNewAcademicYear(!showNewAcademicYear);
-            setIsEditing(true);
-          }}
-        >
-          <Icon icon="faPlus" /> Academic Year
-        </Button>
+        <div />
       )}
     </React.Fragment>
   );

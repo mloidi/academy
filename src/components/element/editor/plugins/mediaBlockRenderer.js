@@ -1,33 +1,33 @@
-import React from "../../../../../node_modules/react";
+import React from 'react';
 
 export const mediaBlockRenderer = block => {
-	if (block.getType() === "atomic") {
-		return {
-			component: Media,
-			editable: false
-		};
-	}
+  if (block.getType() === 'atomic') {
+    return {
+      component: Media,
+      editable: false
+    };
+  }
 
-	return null;
+  return null;
 };
 
 const Image = props => {
-	if (!!props.src) {
-		return <img src={props.src} alt={props.src}/>;
-	}
-	return null;
+  if (!!props.src) {
+    return <img src={props.src} alt={props.src} />;
+  }
+  return null;
 };
 
 const Media = props => {
-	const entity = props.contentState.getEntity(props.block.getEntityAt(0));
-	const { src } = entity.getData();
-	const type = entity.getType();
+  const entity = props.contentState.getEntity(props.block.getEntityAt(0));
+  const { src } = entity.getData();
+  const type = entity.getType();
 
-	let media;
+  let media;
 
-	if (type === "image") {
-		media = <Image src={src} />;
-	}
+  if (type === 'image') {
+    media = <Image src={src} />;
+  }
 
-	return media;
+  return media;
 };
