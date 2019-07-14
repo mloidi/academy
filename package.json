@@ -14,9 +14,9 @@
     "react-helmet": "^5.2.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "react-transition-group": "^4.1.1",
+    "react-transition-group": "^4.2.1",
     "styled-components": "^4.3.2",
-    "draft-js": "^0.10.5",
+    "draft-js": "^0.11.0",
     "draft-js-plugins-editor": "^2.1.1"
   },
   "scripts": {
